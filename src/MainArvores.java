@@ -15,7 +15,7 @@ public class MainArvores {
         System.out.println("Digite o elemento a ser removido da de busca: ");
         int op = sc.nextInt();
 
-        arvoreBusca.remover(op);
+        arvoreBusca.remover(arvoreBusca.getRaiz(), op);
 
         System.out.println("Digite o elemento a ser removido da AVL: ");
         op = sc.nextInt();

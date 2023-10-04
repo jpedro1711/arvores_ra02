@@ -140,57 +140,40 @@ public class arvoreBusca {
     }
 
 
-    public void remover(int valor) {
-        if (this.raiz != null) {
-            if (this.raiz.getInfo() == valor) {
-                Node dir = raiz.getDireito();
-                dir.setEsquerdo(this.raiz.getEsquerdo());
-                this.raiz.setEsquerdo(null);
-                this.raiz = dir;
-            }
-            Node no = busca(valor);
-            // Remover nó folha
-            if (no.getEsquerdo() == null && no.getDireito() == null) {
-                Node pai = buscarPai(no);
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(null);
-                if (pai.getDireito() == no) pai.setDireito(null);
-                no = null;
-                return;
-            }
-            // Remover nó com 1 filho
-            if (no.getEsquerdo() != null && no.getDireito() == null) {
-                Node pai = buscarPai(no);
-                if (pai.getDireito() == no) pai.setDireito(no.getEsquerdo());
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(no.getEsquerdo());
-                return;
-            }
-            if (no.getEsquerdo() == null && no.getDireito() == null) {
-                Node pai = buscarPai(no);
-                if (pai.getDireito() == no) pai.setDireito(no.getDireito());
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(no.getDireito());
-                return;
-            }
-            // Remover nó com 2 filhos
-            if (no.getDireito() != null && no.getEsquerdo() != null) {
-                // Pegar o mais a direita da sub-árvore esquerda
-                Node aux = no.getEsquerdo();
-                Node pai = null;
+    public Node remover(Node raiz, int valor) {
+        if (raiz == null) {
+            return raiz;
+        }
+        if (valor < raiz.getInfo()) {
+            raiz.setEsquerdo(remover(raiz.getEsquerdo(), valor));
+        }
+        else if (valor > raiz.getInfo()) {
+            raiz.setDireito(remover(raiz.getDireito(), valor));
+        }
+        else { // valor == raiz.getInfo()
+            // 2 filhos
+            if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
+                Node aux = raiz.getEsquerdo();
+                Node paiAux = raiz;
                 while (aux.getDireito() != null) {
-                    pai = aux;
-                    aux = aux.getDireito();
+                    paiAux = aux;
+                    aux = aux.getDireito(); // Menor elemento da sub-arvore dir
                 }
-                if (pai == null) { // Quer dizer que o pai desse nó é a raiz
-                    aux.setDireito(no.getDireito());
-                    this.raiz.setDireito(aux);
-                    return;
-                }
-                pai.setDireito(null);
-                no.setInfo(aux.getInfo());
-                return;
+                paiAux.setDireito(null);
+                raiz.setInfo(aux.getInfo());
+            } else if (raiz.getEsquerdo() != null && raiz.getDireito() == null) {
+                // 1 filho na esq
+                raiz = raiz.getEsquerdo();
+                // 1 filho na dir
+            } else if (raiz.getEsquerdo() == null && raiz.getDireito() != null) {
+                raiz = raiz.getDireito();
+            } else if (raiz.getEsquerdo() == null && raiz.getDireito() == null) {
+                // Sem filhos
+                raiz = null;
             }
         }
+        return raiz;
     }
-
     public void imprime(Node node, String prefix, boolean isLeft) {
         if (node != null) {
             System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.getInfo());

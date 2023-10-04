@@ -39,24 +39,26 @@ public class arvoreAVL {
         else if (valor > raiz.getInfo()) {
             raiz.setDireito(remover(raiz.getDireito(), valor));
         }
-        else {
+        else { // valor == raiz.getInfo()
+            // 2 filhos
             if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
                 Node aux = raiz.getEsquerdo();
-                Node paiAux = null;
+                Node paiAux = raiz;
                 while (aux.getDireito() != null) {
                     paiAux = aux;
                     aux = aux.getDireito(); // Menor elemento da sub-arvore dir
                 }
                 paiAux.setDireito(null);
                 raiz.setInfo(aux.getInfo());
-                raiz.setDireito(remover(raiz.getDireito(), aux.getInfo()));
-
-            } else {
-                if (raiz.getEsquerdo() != null) {
-                    raiz = raiz.getEsquerdo();
-                } else {
-                    raiz = raiz.getDireito();
-                }
+            } else if (raiz.getEsquerdo() != null && raiz.getDireito() == null) {
+                // 1 filho na esq
+                raiz = raiz.getEsquerdo();
+                // 1 filho na dir
+            } else if (raiz.getEsquerdo() == null && raiz.getDireito() != null) {
+                raiz = raiz.getDireito();
+            } else if (raiz.getEsquerdo() == null && raiz.getDireito() == null) {
+                // Sem filhos
+                raiz = null;
             }
         }
         Node pai = buscarPai(raiz);
@@ -214,7 +216,7 @@ public class arvoreAVL {
         if (fb > 1 || fb < -1) {
             if (fb > 1) {
                 // está desbalanceado para esq
-                if (calcularFB(node.getEsquerdo()) > 0) {
+                if (calcularFB(node.getEsquerdo()) > 0) { // Está desbalanceado por causa de nó a esq na subarvore
                     // Rotação à direita
                     return rotacaoDireita(node);
                 } else {
@@ -223,7 +225,7 @@ public class arvoreAVL {
                 }
             } else {
                 // Está desbalanceado para dir
-                if (calcularFB(node.getDireito()) < 0) {
+                if (calcularFB(node.getDireito()) < 0) { // Está desbalanceado por causa de nó a dir na subarvore
                     // Rotação à esquerda
                     return rotacaoEsquerda(node);
                 } else {
