@@ -279,27 +279,20 @@ public class arvoreAVL {
         return pai;
     }
 
-    public Node buscar(int valor) {
-        if (this.raiz.getInfo() == valor) {
-            return this.raiz;
+    public Node buscar(Node raiz, int valor) {
+        if (raiz == null) {
+            return raiz;
         }
-        Node atual = this.raiz;
 
-        while (atual != null && atual.getInfo() != valor) {
-            if (valor < atual.getInfo()) {
-                if (atual.getEsquerdo() != null && atual.getEsquerdo().getInfo() == valor) {
-                    return atual.getEsquerdo();
-                }
-                atual = atual.getEsquerdo();
-            }
-            if (valor > atual.getInfo()) {
-                if (atual.getDireito() != null && atual.getDireito().getInfo() == valor) {
-                    return atual.getDireito();
-                }
-                atual = atual.getDireito();
-            }
+        if (raiz.getInfo() == valor) {
+            return raiz;
         }
-        return null;
+
+        if (valor < raiz.getInfo()) {
+            return buscar(raiz.getEsquerdo(), valor);
+        } else {
+            return buscar(raiz.getDireito(), valor);
+        }
     }
 
     public void imprime(Node node, String prefix, boolean isLeft) {

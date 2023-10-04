@@ -39,35 +39,70 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
         System.out.println("fb avl: " + arvoreAVL.calcularFB(arvoreAVL.getRaiz()));
         System.out.println("fb busca: " + arvoreAVL.calcularFB(arvoreBusca.getRaiz())); */
-
-        povoarArvores(arvoreBusca, arvoreAVL, 10000);
-        System.out.println("Digite o elemento a ser removido da de busca: ");
-        int op = sc.nextInt();
-
-        arvoreBusca.remover(arvoreBusca.getRaiz(), op);
-
-        System.out.println("Digite o elemento a ser removido da AVL: ");
-        op = sc.nextInt();
-        arvoreAVL.remover(arvoreAVL.getRaiz(), op);
-
-        sc.close();
-    }
-
-    public static void povoarArvores(arvoreBusca arvoreBusca, arvoreAVL arvoreAVL, int numElementos) {
-        int[] vet = new int[numElementos];
+        int n = 100;
+        int[] numeros = new int[n];
 
         Random random = new Random();
 
-        for (int i = 0; i < numElementos; i++) {
-            int num = random.nextInt(999) + 1;
-            vet[i] = num;
+        for (int i = 0; i < n; i++) {
+            numeros[i] = random.nextInt(999) + 1;
         }
 
-        for (int i = 0; i < numElementos; i++) {
-            int num = vet[i];
-            arvoreBusca.inserir(num);
-            arvoreAVL.add(num);
+        // Comentar se for testar inserção
+        for (int i = 0; i < n; i++) {
+            arvoreBusca.inserir(numeros[i]);
         }
 
+        for (int i = 0; i < n; i++) {
+            arvoreAVL.add(numeros[i]);
+        }
+
+        Integer op = 0;
+
+        while (op != 3) {
+            System.out.println("Escolha uma opção: \n1- Inserir na AVl \n2- Inserir na árvore de busca \n3 - Buscar elemento \n4 - Excluir \n5 - Sair");
+            op = sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    for (int i = 0; i < n; i++) {
+                        arvoreAVL.add(numeros[i]);
+                    }
+                    arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
+                    System.out.println("Elementos da avl: " + arvoreAVL.n);
+                    break;
+                case 2:
+                    for (int i = 0; i < n; i++) {
+                        arvoreBusca.inserir(numeros[i]);
+                    }
+                    arvoreBusca.imprime(arvoreBusca.getRaiz(), "", true);
+                    System.out.println("Elementos da árvore de busca: " + arvoreBusca.n);
+                    break;
+                case 3:
+                    arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
+                    System.out.println("Digite o valor: ");
+                    int valor = sc.nextInt();
+                    System.out.println(arvoreAVL.buscar(arvoreAVL.getRaiz(), valor));
+                    System.out.println("Digite qualquer número para continuar");
+                    int o = sc.nextInt();
+                    System.out.println(arvoreBusca.buscar(arvoreBusca.getRaiz(), valor));
+                    break;
+                case 4:
+                    arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
+                    System.out.println("Digite o valor: ");
+                    valor = sc.nextInt();
+                    System.out.println(arvoreAVL.remover(arvoreAVL.getRaiz(), valor));
+                    System.out.println("Digite qualquer número para continuar");
+                    o = sc.nextInt();
+                    System.out.println(arvoreBusca.remover(arvoreBusca.getRaiz(), valor));
+                    break;
+                case 5:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+
+        sc.close();
     }
 }

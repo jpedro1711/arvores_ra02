@@ -76,36 +76,20 @@ public class arvoreBusca {
         return null;
     }
 
-    public Node busca(int e) {
-        if (this.raiz == null) {
-            return null;
-        }
-        if (this.raiz.getInfo() == e) {
-            return this.raiz;
-        }
-        Node aux = raiz;
-        while (true) {
-            if (e < aux.getInfo()) { // Se for menor que a raiz
-                // Esquerda
-                if (aux.getEsquerdo() == null) {
-                    return null;
-                }
-                if (aux.getEsquerdo().getInfo()== e) { // Se o nó da esquerda for null
-                    return aux.getEsquerdo();
-                }
-                aux = aux.getEsquerdo(); // Senão, passa para o próximo nó (esquerda)
-            } else { // Se for maior que a raiz
-                // direita
-                if (aux.getDireito() == null) {
-                    return null;
-                }
-                if (aux.getDireito().getInfo() == e) { // Se o nó da direita for null
-                    return aux.getDireito();
-                }
-                aux = aux.getDireito(); // Senão, passa para o próximo nó (direita)
-            }
+    public Node buscar(Node raiz, int valor) {
+        if (raiz == null) {
+            return raiz;
         }
 
+        if (raiz.getInfo() == valor) {
+            return raiz;
+        }
+
+        if (valor < raiz.getInfo()) {
+            return buscar(raiz.getEsquerdo(), valor);
+        } else {
+            return buscar(raiz.getDireito(), valor);
+        }
     }
 
     public Node buscarPai(Node no) {
