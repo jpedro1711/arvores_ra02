@@ -9,17 +9,21 @@ public class MainArvores {
         arvoreAVL arvoreAVL = new arvoreAVL();
         arvoreBusca arvoreBusca = new arvoreBusca();
 
+
         povoarArvores(arvoreBusca, arvoreAVL, 10000);
 
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
-        System.out.println("Digite o elemento a ser removido da de busca: ");
+
+        System.out.println("fb avl: " + arvoreAVL.calcularFB(arvoreAVL.getRaiz()));
+        System.out.println("fb busca: " + arvoreAVL.calcularFB(arvoreBusca.getRaiz()));
+        /* System.out.println("Digite o elemento a ser removido da de busca: ");
         int op = sc.nextInt();
 
         arvoreBusca.remover(arvoreBusca.getRaiz(), op);
 
         System.out.println("Digite o elemento a ser removido da AVL: ");
         op = sc.nextInt();
-        arvoreAVL.remover(arvoreAVL.getRaiz(), op);
+        arvoreAVL.remover(arvoreAVL.getRaiz(), op); */
 
         sc.close();
     }

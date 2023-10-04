@@ -31,6 +31,18 @@ public class arvoreAVL {
         if (raiz == null) {
             return raiz;
         }
+        if (raiz.getInfo() == valor) {
+            if (raiz.getDireito() == null && raiz.getEsquerdo() == null) {
+                this.raiz = null;
+                return null;
+            } else if (raiz.getDireito() != null) {
+                this.raiz = this.raiz.getDireito();
+                return this.raiz;
+            } else if (raiz.getDireito() == null && raiz.getEsquerdo() != null) {
+                this.raiz = this.raiz.getEsquerdo();
+                return this.raiz;
+            }
+        }
         if (valor < raiz.getInfo()) {
             raiz.setEsquerdo(remover(raiz.getEsquerdo(), valor));
         }
