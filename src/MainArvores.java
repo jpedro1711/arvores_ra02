@@ -12,14 +12,14 @@ public class MainArvores {
         povoarArvores(arvoreBusca, arvoreAVL, 10000);
 
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
-        /* System.out.println("Digite o elemento a ser removido da de busca: ");
+        System.out.println("Digite o elemento a ser removido da de busca: ");
         int op = sc.nextInt();
 
         arvoreBusca.remover(op);
 
         System.out.println("Digite o elemento a ser removido da AVL: ");
         op = sc.nextInt();
-        arvoreAVL.remover(op); */
+        arvoreAVL.remover(arvoreAVL.getRaiz(), op);
 
         sc.close();
     }
@@ -37,8 +37,7 @@ public class MainArvores {
         for (int i = 0; i < numElementos; i++) {
             int num = vet[i];
             arvoreBusca.inserir(num);
-            arvoreAVL.inserir(num);
-            //arvoreAVL.add(num);
+            arvoreAVL.add(num);
         }
 
     }

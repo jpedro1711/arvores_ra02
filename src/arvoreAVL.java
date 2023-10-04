@@ -6,38 +6,62 @@ public class arvoreAVL {
         this.raiz = null;
     }
 
-    public Node inserir(int e) {
-        if (this.raiz == null) {
-            raiz = new Node();
-            raiz.setInfo(e);
+    public void add(int e) {
+        this.raiz = inserir(this.raiz, e);
+    }
+
+    public Node inserir(Node raiz, int e) {
+        if (raiz == null) {
+            Node novo = new Node();
+            novo.setInfo(e);
             n++;
+            return novo;
+        }
+        if (e < this.raiz.getInfo()) {
+            raiz.setEsquerdo(inserir(raiz.getEsquerdo(), e));
+        } else if (e >= this.raiz.getInfo()) {
+            raiz.setDireito(inserir(raiz.getDireito(), e));
+        }
+        return balancear(raiz);
+    }
+
+
+
+    public Node remover(Node raiz, int valor) {
+        if (raiz == null) {
+            Node pai = buscarPai(raiz);
+            balancear(pai);
             return raiz;
         }
-        Node novo = new Node();
-        novo.setInfo(e);
-        Node aux = raiz;
-        while (true) {
-            if (novo.getInfo()< aux.getInfo()) { // Se for menor que a raiz
-                // Esquerda
-                if (aux.getEsquerdo()== null) { // Se o nó da esquerda for null
-                    aux.setEsquerdo(novo);
-                    n++;
-                    percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                    return novo;
+        if (valor < raiz.getInfo()) {
+            raiz.setEsquerdo(remover(raiz.getEsquerdo(), valor));
+        }
+        else if (valor > raiz.getInfo()) {
+            raiz.setDireito(remover(raiz.getDireito(), valor));
+        }
+        else {
+            if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
+                Node aux = raiz.getEsquerdo();
+                Node paiAux = null;
+                while (aux.getDireito() != null) {
+                    paiAux = aux;
+                    aux = aux.getDireito(); // Menor elemento da sub-arvore dir
                 }
-                aux = aux.getEsquerdo(); // Senão, passa para o próximo nó (esquerda)
-            } else { // Se for maior que a raiz
-                // direita
-                if (aux.getDireito() == null) { // Se o nó da direita for null
-                    aux.setDireito(novo);
-                    n++;
-                    percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                    return novo;
+                paiAux.setDireito(null);
+                raiz.setInfo(aux.getInfo());
+                raiz.setDireito(remover(raiz.getDireito(), aux.getInfo()));
+
+            } else {
+                if (raiz.getEsquerdo() != null) {
+                    raiz = raiz.getEsquerdo();
+                } else {
+                    raiz = raiz.getDireito();
                 }
-                aux = aux.getDireito(); // Senão, passa para o próximo nó (direita)
             }
         }
-
+        Node pai = buscarPai(raiz);
+        balancear(pai);
+        return raiz;
     }
 
     public Integer removeMaior() {
@@ -78,68 +102,24 @@ public class arvoreAVL {
         return null;
     }
 
-    public Node busca(int e) {
-        if (this.raiz == null) {
-            return null;
+    public void percorrePreOrder(Node raiz) { // Percorre pre order
+        if (raiz != null) {
+            System.out.print(raiz.getInfo()+ " "); // Visite a raiz da arvora
+            percorrePreOrder(raiz.getEsquerdo()); // Percorra a subarvore da esquerda
+            percorrePreOrder(raiz.getDireito()); // Percorra a subarvore da direita
         }
-        if (this.raiz.getInfo() == e) {
-            return this.raiz;
-        }
-        Node aux = raiz;
-        while (true) {
-            if (e < aux.getInfo()) { // Se for menor que a raiz
-                // Esquerda
-                if (aux.getEsquerdo() == null) {
-                    return null;
-                }
-                if (aux.getEsquerdo().getInfo()== e) { // Se o nó da esquerda for null
-                    return aux.getEsquerdo();
-                }
-                aux = aux.getEsquerdo(); // Senão, passa para o próximo nó (esquerda)
-            } else { // Se for maior que a raiz
-                // direita
-                if (aux.getDireito() == null) {
-                    return null;
-                }
-                if (aux.getDireito().getInfo() == e) { // Se o nó da direita for null
-                    return aux.getDireito();
-                }
-                aux = aux.getDireito(); // Senão, passa para o próximo nó (direita)
-            }
-        }
-
     }
 
-    public Node rotacaoEsquerda(Node raiz) {
-        Node novaRaiz = raiz.getDireito(); // Filho a direita do no
-        Node temp = novaRaiz.getEsquerdo();; // Filho a esquerda do filho direito
-        raiz.setDireito(temp);
-        novaRaiz.setEsquerdo(raiz);
-        if (raiz == this.raiz) {
-            this.raiz = novaRaiz;
+    public void percorreInOrder(Node raiz) {
+        if (raiz != null) {
+            percorreInOrder(raiz.getEsquerdo()); // percorra subarvora da esquerda
+            System.out.print(raiz.getInfo() + " "); // Visite raiz
+            percorreInOrder(raiz.getDireito()); // Percorra subarvore da direita
         }
-        return novaRaiz;
     }
 
-    public Node rotacaoDireita(Node raiz) {
-        Node novaRaiz = raiz.getEsquerdo();
-        Node temp = novaRaiz.getDireito();
-        raiz.setEsquerdo(temp);
-        novaRaiz.setDireito(raiz);
-        if (raiz == this.raiz) {
-            this.raiz = novaRaiz;
-        }
-        return novaRaiz;
-    }
-
-    public Node rotacaoEsquerdaDireita(Node no) {
-        no.setEsquerdo(rotacaoEsquerda(no.getEsquerdo()));
-        return rotacaoDireita(no);
-    }
-
-    public Node rotacaoDireitaEsquerda(Node no) {
-        no.setDireito(rotacaoDireita(no.getDireito()));
-        return rotacaoEsquerda(no);
+    public Node getRaiz() {
+        return raiz;
     }
 
     public int calcularAltura(Node no) {
@@ -197,6 +177,38 @@ public class arvoreAVL {
         }
     }
 
+    public Node rotacaoEsquerda(Node raiz) {
+        Node novaRaiz = raiz.getDireito(); // Filho a direita do no
+        Node temp = novaRaiz.getEsquerdo();; // Filho a esquerda do filho direito
+        raiz.setDireito(temp);
+        novaRaiz.setEsquerdo(raiz);
+        if (raiz == this.raiz) {
+            this.raiz = novaRaiz;
+        }
+        return novaRaiz;
+    }
+
+    public Node rotacaoDireita(Node raiz) {
+        Node novaRaiz = raiz.getEsquerdo();
+        Node temp = novaRaiz.getDireito();
+        raiz.setEsquerdo(temp);
+        novaRaiz.setDireito(raiz);
+        if (raiz == this.raiz) {
+            this.raiz = novaRaiz;
+        }
+        return novaRaiz;
+    }
+
+    public Node rotacaoEsquerdaDireita(Node no) {
+        no.setEsquerdo(rotacaoEsquerda(no.getEsquerdo()));
+        return rotacaoDireita(no);
+    }
+
+    public Node rotacaoDireitaEsquerda(Node no) {
+        no.setDireito(rotacaoDireita(no.getDireito()));
+        return rotacaoEsquerda(no);
+    }
+
     public Node balancear(Node node) {
         int fb = calcularFB(node);
         if (fb > 1 || fb < -1) {
@@ -221,40 +233,6 @@ public class arvoreAVL {
             }
         }
         return node;
-    }
-
-
-    public void percorrerDireita(Node raiz, Node pai) {
-        if (raiz != null) {
-            percorrerDireita(raiz.getDireito(), raiz);
-            if (calcularFB(raiz) > 1 || calcularFB(raiz) < -1) {
-                if (pai != null) {
-                    pai.setDireito(balancear(raiz));
-                } else {
-                    // Quer dizer que esse elemento não tem pai, ou seja, é raiz
-                    while (calcularFB(this.raiz) > 1 || calcularFB(this.raiz) < -1) {
-                        this.raiz = balancear(this.raiz);
-                    }
-                }
-            }
-        }
-    }
-
-
-    public void percorrerEsquerda(Node raiz, Node pai) {
-        if (raiz != null) {
-            percorrerEsquerda(raiz.getEsquerdo(), raiz);
-            if (calcularFB(raiz) > 1 || calcularFB(raiz) < -1) {
-                if (pai != null) {
-                    pai.setEsquerdo(balancear(raiz));
-                }
-                else {
-                    while (calcularFB(this.raiz) > 1 || calcularFB(this.raiz) < -1) {
-                        this.raiz = balancear(this.raiz);
-                    }
-                }
-            }
-        }
     }
 
     public Node buscarPai(Node no) {
@@ -288,67 +266,27 @@ public class arvoreAVL {
         return pai;
     }
 
-    public void remover(int valor) {
-        if (this.raiz != null) {
-            if (this.raiz.getInfo() == valor) {
-                Node dir = raiz.getDireito();
-                dir.setEsquerdo(this.raiz.getEsquerdo());
-                this.raiz.setEsquerdo(null);
-                this.raiz = dir;
-            }
-            Node no = busca(valor);
-            // Remover nó folha
-            if (no.getEsquerdo() == null && no.getDireito() == null) {
-                Node pai = buscarPai(no);
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(null);
-                if (pai.getDireito() == no) pai.setDireito(null);
-                no = null;
-                percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                return;
-            }
-            // Remover nó com 1 filho
-            if (no.getEsquerdo() != null && no.getDireito() == null) {
-                // Se o filho estiver na esquerda
-                Node pai = buscarPai(no);
-                if (pai.getDireito() == no) pai.setDireito(no.getEsquerdo());
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(no.getEsquerdo());
-                percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                return;
-            }
-            if (no.getEsquerdo() == null && no.getDireito() != null) {
-                // Se o filho estiver na direita
-                Node pai = buscarPai(no);
-                if (pai.getDireito() == no) pai.setDireito(no.getDireito());
-                if (pai.getEsquerdo() == no) pai.setEsquerdo(no.getDireito());
-                percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                return;
-            }
-            // Remover nó com 2 filhos
-            if (no.getDireito() != null && no.getEsquerdo() != null) {
-                // Pegar o mais a direita da sub-árvore esquerda
-                Node aux = no.getEsquerdo();
-                Node pai = null;
-                while (aux.getDireito() != null) {
-                    pai = aux;
-                    aux = aux.getDireito();
+    public Node buscar(int valor) {
+        if (this.raiz.getInfo() == valor) {
+            return this.raiz;
+        }
+        Node atual = this.raiz;
+
+        while (atual != null && atual.getInfo() != valor) {
+            if (valor < atual.getInfo()) {
+                if (atual.getEsquerdo() != null && atual.getEsquerdo().getInfo() == valor) {
+                    return atual.getEsquerdo();
                 }
-                if (pai == null) { // Quer dizer que o pai desse nó é a raiz
-                    aux.setDireito(no.getDireito());
-                    this.raiz.setDireito(aux);
-                    percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                    percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                    return;
+                atual = atual.getEsquerdo();
+            }
+            if (valor > atual.getInfo()) {
+                if (atual.getDireito() != null && atual.getDireito().getInfo() == valor) {
+                    return atual.getDireito();
                 }
-                pai.setDireito(null);
-                no.setInfo(aux.getInfo());
-                percorrerEsquerda(this.raiz.getDireito(), this.raiz);
-                percorrerDireita(this.raiz.getEsquerdo(), this.raiz);
-                return;
+                atual = atual.getDireito();
             }
         }
+        return null;
     }
 
     public void imprime(Node node, String prefix, boolean isLeft) {
@@ -364,9 +302,5 @@ public class arvoreAVL {
         } else {
             System.out.println(prefix + (isLeft ? "├── " : "└── ") + "Vazio");
         }
-    }
-
-    public Node getRaiz() {
-        return raiz;
     }
 }
