@@ -29,8 +29,6 @@ public class arvoreAVL {
 
     public Node remover(Node raiz, int valor) {
         if (raiz == null) {
-            Node pai = buscarPai(raiz);
-            balancear(pai);
             return raiz;
         }
         if (valor < raiz.getInfo()) {
@@ -62,8 +60,7 @@ public class arvoreAVL {
             }
         }
         Node pai = buscarPai(raiz);
-        balancear(pai);
-        return raiz;
+        return balancear(pai);
     }
 
     public Integer removeMaior() {
