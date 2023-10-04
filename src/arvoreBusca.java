@@ -163,6 +163,21 @@ public class arvoreBusca {
             raiz.setDireito(remover(raiz.getDireito(), valor));
         }
         else { // valor == raiz.getInfo()
+            if (raiz.getInfo() == this.raiz.getInfo()) {
+                Node dir = this.raiz.getDireito();
+                Node esq = this.raiz.getEsquerdo();
+                if (dir != null) {
+                    dir.setEsquerdo(raiz.getEsquerdo());
+                    this.raiz = dir;
+                }
+                if (dir == null && esq != null) {
+                    this.raiz.setEsquerdo(null);
+                    this.raiz = esq;
+                }
+                if (dir == null && esq == null) {
+                    this.raiz = null;
+                }
+            }
             // 2 filhos
             if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
                 Node aux = raiz.getEsquerdo();

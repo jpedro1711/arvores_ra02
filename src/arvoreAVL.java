@@ -31,18 +31,6 @@ public class arvoreAVL {
         if (raiz == null) {
             return raiz;
         }
-        if (raiz.getInfo() == valor) {
-            if (raiz.getDireito() == null && raiz.getEsquerdo() == null) {
-                this.raiz = null;
-                return null;
-            } else if (raiz.getDireito() != null) {
-                this.raiz = this.raiz.getDireito();
-                return this.raiz;
-            } else if (raiz.getDireito() == null && raiz.getEsquerdo() != null) {
-                this.raiz = this.raiz.getEsquerdo();
-                return this.raiz;
-            }
-        }
         if (valor < raiz.getInfo()) {
             raiz.setEsquerdo(remover(raiz.getEsquerdo(), valor));
         }
@@ -51,6 +39,21 @@ public class arvoreAVL {
         }
         else { // valor == raiz.getInfo()
             // 2 filhos
+            if (raiz.getInfo() == this.raiz.getInfo()) {
+                Node dir = this.raiz.getDireito();
+                Node esq = this.raiz.getEsquerdo();
+                if (dir != null) {
+                    dir.setEsquerdo(raiz.getEsquerdo());
+                    this.raiz = dir;
+                }
+                if (dir == null && esq != null) {
+                    this.raiz.setEsquerdo(null);
+                    this.raiz = esq;
+                }
+                if (dir == null && esq == null) {
+                    this.raiz = null;
+                }
+            }
             if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
                 Node aux = raiz.getEsquerdo();
                 Node paiAux = raiz;
@@ -71,8 +74,7 @@ public class arvoreAVL {
                 raiz = null;
             }
         }
-        Node pai = buscarPai(raiz);
-        return balancear(pai);
+        return balancear(raiz);
     }
 
     public Integer removeMaior() {
