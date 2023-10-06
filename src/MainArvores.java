@@ -22,7 +22,7 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
 
         System.out.println(arvoreAVL.buscar(10)); */
-        int n = 100;
+        int n = 1000000;
         int[] numeros = new int[n];
 
         Random random = new Random();
@@ -65,10 +65,10 @@ public class MainArvores {
                     arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
                     System.out.println("Digite o valor: ");
                     int valor = sc.nextInt();
-                    System.out.println(arvoreAVL.buscar(arvoreAVL.getRaiz(), valor));
-                    System.out.println("Digite qualquer número para continuar");
-                    int o = sc.nextInt();
                     System.out.println(arvoreBusca.buscar(arvoreBusca.getRaiz(), valor));
+                    System.out.println("Digite qualquer número para continuar (Busca na AVL)");
+                    int o = sc.nextInt();
+                    System.out.println(arvoreAVL.buscar(arvoreAVL.getRaiz(), valor));
                     break;
                 case 4:
                     arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
