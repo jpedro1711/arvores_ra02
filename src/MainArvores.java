@@ -22,7 +22,7 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
 
         System.out.println(arvoreAVL.buscar(10)); */
-        int n = 1000;
+        int n = 100;
         int[] numeros = new int[n];
 
         Random random = new Random();
@@ -42,7 +42,7 @@ public class MainArvores {
 
         Integer op = 0;
 
-        while (op != 3) {
+        while (op != 5) {
             System.out.println("Escolha uma opção: \n1- Inserir na AVl \n2- Inserir na árvore de busca \n3 - Buscar elemento \n4 - Excluir \n5 - Sair");
             op = sc.nextInt();
 
