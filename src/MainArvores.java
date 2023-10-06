@@ -22,7 +22,7 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
 
         System.out.println(arvoreAVL.buscar(10)); */
-        int n = 10000;
+        int n = 100;
         int[] numeros = new int[n];
 
         Random random = new Random();

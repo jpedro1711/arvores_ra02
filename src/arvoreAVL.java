@@ -17,7 +17,7 @@ public class arvoreAVL {
             n++;
             return novo;
         }
-        if (e < this.raiz.getInfo()) {
+        if (e < raiz.getInfo()) {
             raiz.setEsquerdo(inserir(raiz.getEsquerdo(), e));
         } else {
             raiz.setDireito(inserir(raiz.getDireito(), e));
