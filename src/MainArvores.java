@@ -9,6 +9,15 @@ public class MainArvores {
         arvoreAVL arvoreAVL = new arvoreAVL();
         arvoreBusca arvoreBusca = new arvoreBusca();
         /*
+        arvoreBusca.add(2);
+        arvoreBusca.add(5);
+        arvoreBusca.add(3);
+        arvoreBusca.add(6);
+        arvoreBusca.add(4);
+        arvoreBusca.add(1);
+
+        arvoreBusca.imprime(arvoreBusca.getRaiz(), "", true);
+
         arvoreAVL.add(10);
         arvoreAVL.add(20);
         arvoreAVL.add(30);
@@ -19,9 +28,9 @@ public class MainArvores {
         arvoreAVL.add(80);
         arvoreAVL.add(90);
 
-        arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
+        arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true); */
 
-        System.out.println(arvoreAVL.buscar(10)); */
+
         int n = 100;
         int[] numeros = new int[n];
 
@@ -33,7 +42,7 @@ public class MainArvores {
 
         // Comentar se for testar inserção
         for (int i = 0; i < n; i++) {
-            arvoreBusca.inserir(numeros[i]);
+            arvoreBusca.add(numeros[i]);
         }
 
         for (int i = 0; i < n; i++) {
@@ -56,7 +65,7 @@ public class MainArvores {
                     break;
                 case 2:
                     for (int i = 0; i < n; i++) {
-                        arvoreBusca.inserir(numeros[i]);
+                        arvoreBusca.add(numeros[i]);
                     }
                     arvoreBusca.imprime(arvoreBusca.getRaiz(), "", true);
                     System.out.println("Elementos da árvore de busca: " + arvoreBusca.n);
@@ -66,7 +75,7 @@ public class MainArvores {
                     System.out.println("Digite o valor: ");
                     int valor = sc.nextInt();
                     System.out.println(arvoreAVL.buscar(arvoreAVL.getRaiz(), valor));
-                    System.out.println("Digite qualquer número para continuar (Busca na AVL)");
+                    System.out.println("Digite qualquer número para continuar");
                     int o = sc.nextInt();
                     System.out.println(arvoreBusca.buscar(arvoreBusca.getRaiz(), valor));
                     break;

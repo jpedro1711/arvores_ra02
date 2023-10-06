@@ -6,36 +6,23 @@ public class arvoreBusca {
         this.raiz = null;
     }
 
-    public Node inserir(int e) {
-        if (this.raiz == null) {
-            raiz = new Node();
-            raiz.setInfo(e);
-            n++;
-            return raiz;
-        }
-        Node novo = new Node();
-        novo.setInfo(e);
-        Node aux = raiz;
-        while (true) {
-            if (novo.getInfo()< aux.getInfo()) { // Se for menor que a raiz
-                // Esquerda
-                if (aux.getEsquerdo()== null) { // Se o nó da esquerda for null
-                    aux.setEsquerdo(novo);
-                    n++;
-                    return novo;
-                }
-                aux = aux.getEsquerdo(); // Senão, passa para o próximo nó (esquerda)
-            } else { // Se for maior que a raiz
-                // direita
-                if (aux.getDireito() == null) { // Se o nó da direita for null
-                    aux.setDireito(novo);
-                    n++;
-                    return novo;
-                }
-                aux = aux.getDireito(); // Senão, passa para o próximo nó (direita)
-            }
-        }
+    public void add(int e) {
+        this.raiz = inserir(this.raiz, e);
+    }
 
+    public Node inserir(Node raiz, int e) {
+        if (raiz == null) {
+            Node novo = new Node();
+            novo.setInfo(e);
+            n++;
+            return novo;
+        }
+        if (e < raiz.getInfo()) {
+            raiz.setEsquerdo(inserir(raiz.getEsquerdo(), e));
+        } else {
+            raiz.setDireito(inserir(raiz.getDireito(), e));
+        }
+        return raiz;
     }
 
     public Integer removeMaior() {
@@ -133,18 +120,6 @@ public class arvoreBusca {
         if (raiz == null) {
             return raiz;
         }
-        if (raiz.getInfo() == valor) {
-            if (raiz.getDireito() == null && raiz.getEsquerdo() == null) {
-                this.raiz = null;
-                return null;
-            } else if (raiz.getDireito() != null) {
-                this.raiz = this.raiz.getDireito();
-                return this.raiz;
-            } else if (raiz.getDireito() == null && raiz.getEsquerdo() != null) {
-                this.raiz = this.raiz.getEsquerdo();
-                return this.raiz;
-            }
-        }
         if (valor < raiz.getInfo()) {
             raiz.setEsquerdo(remover(raiz.getEsquerdo(), valor));
         }
@@ -152,6 +127,7 @@ public class arvoreBusca {
             raiz.setDireito(remover(raiz.getDireito(), valor));
         }
         else { // valor == raiz.getInfo()
+            // 2 filhos
             if (raiz.getInfo() == this.raiz.getInfo()) {
                 Node dir = this.raiz.getDireito();
                 Node esq = this.raiz.getEsquerdo();
@@ -167,7 +143,6 @@ public class arvoreBusca {
                     this.raiz = null;
                 }
             }
-            // 2 filhos
             if (raiz.getEsquerdo() != null && raiz.getDireito() != null) {
                 Node aux = raiz.getEsquerdo();
                 Node paiAux = raiz;
