@@ -8,8 +8,8 @@ public class MainArvores {
 
         arvoreAVL arvoreAVL = new arvoreAVL();
         arvoreBusca arvoreBusca = new arvoreBusca();
-
-        /* arvoreAVL.add(10);
+        /*
+        arvoreAVL.add(10);
         arvoreAVL.add(20);
         arvoreAVL.add(30);
         arvoreAVL.add(40);
@@ -19,27 +19,10 @@ public class MainArvores {
         arvoreAVL.add(80);
         arvoreAVL.add(90);
 
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 10);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 20);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 30);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 50);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 40);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 90);
-
-        arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 80);
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 70);
-
-        System.out.println("-------------------");
-
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
 
-        System.out.println("-------------------");
-        arvoreAVL.remover(arvoreAVL.getRaiz(), 60);
-        arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true);
-        System.out.println("fb avl: " + arvoreAVL.calcularFB(arvoreAVL.getRaiz()));
-        System.out.println("fb busca: " + arvoreAVL.calcularFB(arvoreBusca.getRaiz())); */
-        int n = 100;
+        System.out.println(arvoreAVL.buscar(10)); */
+        int n = 10000;
         int[] numeros = new int[n];
 
         Random random = new Random();

@@ -76,20 +76,25 @@ public class arvoreBusca {
         return null;
     }
 
-    public Node buscar(Node raiz, int valor) {
-        if (raiz == null) {
-            return raiz;
+    public boolean buscar(Node raiz, int info) {
+        if (raiz != null) {
+            if (info == raiz.getInfo()) {
+                return true;
+            }
+            if (raiz.getDireito() != null && info == raiz.getDireito().getInfo()) {
+                return true;
+            }
+            if (raiz.getEsquerdo() != null && info == raiz.getEsquerdo().getInfo()) {
+                return true;
+            }
+            if (info < this.raiz.getInfo()) {
+                return buscar(raiz.getEsquerdo(), info);
+            } else {
+                return buscar(raiz.getDireito(), info);
+            }
         }
 
-        if (raiz.getInfo() == valor) {
-            return raiz;
-        }
-
-        if (valor < raiz.getInfo()) {
-            return buscar(raiz.getEsquerdo(), valor);
-        } else {
-            return buscar(raiz.getDireito(), valor);
-        }
+        return false;
     }
 
     public Node buscarPai(Node no) {

@@ -19,7 +19,7 @@ public class arvoreAVL {
         }
         if (e < this.raiz.getInfo()) {
             raiz.setEsquerdo(inserir(raiz.getEsquerdo(), e));
-        } else if (e >= this.raiz.getInfo()) {
+        } else {
             raiz.setDireito(inserir(raiz.getDireito(), e));
         }
         return balancear(raiz);
@@ -121,6 +121,27 @@ public class arvoreAVL {
             percorrePreOrder(raiz.getEsquerdo()); // Percorra a subarvore da esquerda
             percorrePreOrder(raiz.getDireito()); // Percorra a subarvore da direita
         }
+    }
+
+    public boolean buscar(Node raiz, int info) {
+        if (raiz != null) {
+            if (info == raiz.getInfo()) {
+                return true;
+            }
+            if (raiz.getDireito() != null && info == raiz.getDireito().getInfo()) {
+                return true;
+            }
+            if (raiz.getEsquerdo() != null && info == raiz.getEsquerdo().getInfo()) {
+                return true;
+            }
+            if (info < this.raiz.getInfo()) {
+                return buscar(raiz.getEsquerdo(), info);
+            } else {
+                return buscar(raiz.getDireito(), info);
+            }
+        }
+
+        return false;
     }
 
     public void percorreInOrder(Node raiz) {
@@ -279,22 +300,6 @@ public class arvoreAVL {
         return pai;
     }
 
-    public Node buscar(Node raiz, int valor) {
-        if (raiz == null) {
-            return raiz;
-        }
-
-        if (raiz.getInfo() == valor) {
-            return raiz;
-        }
-
-        if (valor < raiz.getInfo()) {
-            return buscar(raiz.getEsquerdo(), valor);
-        } else {
-            return buscar(raiz.getDireito(), valor);
-        }
-    }
-
     public void imprime(Node node, String prefix, boolean isLeft) {
         if (node != null) {
             System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.getInfo());
@@ -307,6 +312,16 @@ public class arvoreAVL {
             imprime(node.getEsquerdo(), newPrefix, false);
         } else {
             System.out.println(prefix + (isLeft ? "├── " : "└── ") + "Vazio");
+        }
+    }
+
+
+
+    public void percorrePosOrder(Node raiz) {
+        if (raiz != null) {
+            percorrePosOrder(raiz.getEsquerdo()); // percorra subarvore da esquerda
+            percorrePosOrder(raiz.getDireito()); // percorra subarvore da direita
+            System.out.print(raiz.getInfo() + " "); // visite a raiz
         }
     }
 }
