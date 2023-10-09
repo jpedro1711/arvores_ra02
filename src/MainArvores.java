@@ -31,7 +31,7 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true); */
 
 
-        int n = 100;
+        int n = 20000;
         int[] numeros = new int[n];
 
         Random random = new Random();
@@ -41,6 +41,7 @@ public class MainArvores {
         }
 
         // Comentar se for testar inserção
+
         for (int i = 0; i < n; i++) {
             arvoreBusca.add(numeros[i]);
         }
