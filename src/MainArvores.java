@@ -31,7 +31,7 @@ public class MainArvores {
         arvoreAVL.imprime(arvoreAVL.getRaiz(), "", true); */
 
 
-        int n = 20000;
+        int n = 100;
         int[] numeros = new int[n];
 
         Random random = new Random();
